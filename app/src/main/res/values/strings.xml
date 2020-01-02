@@ -3,4 +3,13 @@
     <string name="app_loading">Loading…</string>
 
     <string name="app_back_press">Press back again to exit app</string>
+
+    <!-- List -->
+    <string name="app_list_null">Empty Data</string>
+    <string name="app_list_error">There was an error, please try again later.</string>
+
+    <!-- Item -->
+    <string name="app_item_name">App name :</string>
+    <string name="app_item_version">App version :</string>
+    <string name="app_item_permission_count">App permission count :</string>
 </resources>

@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/view_data_history"
+                android:id="@+id/view_list_app"
                 app:adapter="@{ viewModel.adapterApp }"
                 app:mutableVisibility="@{ viewModel.viewList }"
                 android:layout_width="match_parent"

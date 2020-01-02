@@ -9,4 +9,21 @@
     <dimen name="padding_left_text">5dp</dimen>
     <dimen name="padding_right_text">5dp</dimen>
     <dimen name="padding_last_item">5dp</dimen>
+
+    <!-- weight -->
+    <dimen name="width_min_dialog_btn">100dp</dimen>
+    <dimen name="width_btn">200dp</dimen>
+
+    <!-- corners -->
+    <dimen name="corner_of_all">50dp</dimen>
+    <dimen name="corner_card_view">19dp</dimen>
+    <dimen name="corner_card_zero">1dp</dimen>
+
+    <dimen name="elevation_cardview">1dp</dimen>
+    <dimen name="elevation_cardview_date">6dp</dimen>
+    <dimen name="max_elevation_cardview">6dp</dimen>
+    <dimen name="stroke_width_cardview">0.5dp</dimen>
+
+    <dimen name="height_imageview_account">60dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
 </resources>

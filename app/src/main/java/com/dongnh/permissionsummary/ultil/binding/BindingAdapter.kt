@@ -1,6 +1,9 @@
 package com.dongnh.permissionsummary.ultil.binding
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -21,4 +24,16 @@ fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
             value ?: View.VISIBLE
         })
     }
+}
+
+@BindingAdapter("mutableTextString")
+fun setMutableTextString(view: TextView, text: String?) {
+    if (view.text != text.toString()) {
+        view.text = text.toString()
+    }
+}
+
+@BindingAdapter("mutableImage")
+fun setMutableImage(view: ImageView, drawable: Drawable?) {
+    view.setImageDrawable(drawable)
 }

@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dongnh.permissionsummary.R
 import com.dongnh.permissionsummary.databinding.ItemAppPermissionBinding
 import com.dongnh.permissionsummary.model.AppPermission
+import com.dongnh.permissionsummary.ultil.interfaces.OnItemClickListener
 import com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel
 
 class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolder>() {
+    lateinit var listener: OnItemClickListener
     private var dataList:ArrayList<AppPermission> = arrayListOf()
 
     // Create view of Adapter
@@ -21,6 +23,11 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
     // Bind data
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataList[position])
+        holder.itemView.setOnClickListener { view ->
+            listener.let {
+                listener.onClick(view, dataList[position])
+            }
+        }
     }
 
     // Get item count
@@ -34,6 +41,10 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
         notifyDataSetChanged()
     }
 
+    // Set listener
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
 
     // Class binding data
     class ViewHolder(private val binding: ItemAppPermissionBinding): RecyclerView.ViewHolder(binding.root){
