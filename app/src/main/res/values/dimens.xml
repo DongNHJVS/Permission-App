@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- margin -->
+    <dimen name="margin_common">5dp</dimen>
+    <dimen name="margin_material">16dp</dimen>
+
+    <!-- padding -->
+    <dimen name="padding_left_text">5dp</dimen>
+    <dimen name="padding_right_text">5dp</dimen>
+    <dimen name="padding_last_item">5dp</dimen>
+</resources>
