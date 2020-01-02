@@ -1,7 +1,9 @@
 package com.dongnh.permissionsummary.model
 
+import android.graphics.drawable.Drawable
+
 data class PermissionItem(
     var permissionName: String? = "",
-    var granted: Int? = -1
-
+    var granted: Int? = -1,
+    var drawableIcon: Drawable? = null
 )

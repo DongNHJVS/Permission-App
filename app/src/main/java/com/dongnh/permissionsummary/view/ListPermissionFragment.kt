@@ -1,21 +1,17 @@
 package com.dongnh.permissionsummary.view
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.dongnh.permissionsummary.R
 import com.dongnh.permissionsummary.base.BaseFragment
 import com.dongnh.permissionsummary.databinding.ListPermissionFragmentBinding
 import com.dongnh.permissionsummary.model.AppPermission
+import com.dongnh.permissionsummary.singleton.SingletonArgument
+import com.dongnh.permissionsummary.ultil.exts.addFragmentSafeLy
 import com.dongnh.permissionsummary.ultil.interfaces.OnItemClickListener
 import com.dongnh.permissionsummary.viewmodel.ListPermissionViewModel
 import timber.log.Timber
@@ -61,5 +57,15 @@ class ListPermissionFragment : BaseFragment<ListPermissionFragmentBinding, ListP
      */
     override fun onClick(view: View, entity: AppPermission) {
         Timber.e(entity.toString())
+        SingletonArgument.appPermission = entity
+        activity?.let {
+            try {
+                it as MainActivity
+                it.addFragmentSafeLy(DetailAppFragment(),
+                    DetailAppFragment::class.java.simpleName, false, R.id.main_layout, 0, 0, 0, 0)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }

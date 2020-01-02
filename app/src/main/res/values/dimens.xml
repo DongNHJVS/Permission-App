@@ -25,5 +25,10 @@
     <dimen name="stroke_width_cardview">0.5dp</dimen>
 
     <dimen name="height_imageview_account">60dp</dimen>
+    <dimen name="height_imageview_detail">40dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
+
+    <!-- background -->
+    <dimen name="border_view">1dp</dimen>
+    <dimen name="radius_view">5dp</dimen>
 </resources>

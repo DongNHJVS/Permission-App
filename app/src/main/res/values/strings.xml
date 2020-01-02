@@ -12,4 +12,11 @@
     <string name="app_item_name">App name :</string>
     <string name="app_item_version">App version :</string>
     <string name="app_item_permission_count">App permission count :</string>
+
+    <!-- Detail -->
+    <string name="app_detail_name">Detail</string>
+    <string name="app_detail_granted">Granted</string>
+    <string name="app_detail_not_granted">Not Granted</string>
+    <string name="app_detail_when_use">Allow when using app</string>
+    <string name="app_detail_not_know">Unknowns</string>
 </resources>

@@ -2,20 +2,20 @@ package com.dongnh.permissionsummary.viewmodel
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
+import android.content.pm.*
+import android.content.res.Resources.NotFoundException
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.dongnh.permissionsummary.adapter.AdapterAppPermission
 import com.dongnh.permissionsummary.base.BaseViewModel
+import com.dongnh.permissionsummary.const.ANDROID
 import com.dongnh.permissionsummary.model.AppPermission
 import com.dongnh.permissionsummary.model.PermissionItem
+import timber.log.Timber
 
 
-@Suppress("CAST_NEVER_SUCCEEDS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@Suppress("CAST_NEVER_SUCCEEDS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATION")
 class ListPermissionViewModel(var context: Context) : BaseViewModel() {
     val adapterApp: AdapterAppPermission = AdapterAppPermission()
     val viewList: MutableLiveData<Int> = MutableLiveData()
@@ -70,7 +70,21 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
 
             if (requestedPermissions != null) {
                 for (stringPermission in requestedPermissions) {
-                    val permissionItem = PermissionItem(permissionName = stringPermission)
+                    var drawable: Drawable? = null
+                    try {
+                        val permissionInfo: PermissionInfo =
+                            context.packageManager.getPermissionInfo(stringPermission, 0)
+                        val groupInfo: PermissionGroupInfo =
+                            context.packageManager.getPermissionGroupInfo(permissionInfo.group, 0)
+                        drawable = context.packageManager.getResourcesForApplication(ANDROID)
+                            .getDrawable(groupInfo.icon)
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        Timber.e(e)
+                    } catch (e: NotFoundException) {
+                        Timber.e(e)
+                    }
+
+                    val permissionItem = PermissionItem(permissionName = stringPermission, drawableIcon = drawable)
                     listPermission.add(permissionItem)
                 }
 
