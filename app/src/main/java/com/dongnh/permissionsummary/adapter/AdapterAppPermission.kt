@@ -12,11 +12,16 @@ import com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel
 
 class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolder>() {
     lateinit var listener: OnItemClickListener
-    private var dataList:ArrayList<AppPermission> = arrayListOf()
+    private var dataList: ArrayList<AppPermission> = arrayListOf()
 
     // Create view of Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemAppPermissionBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_app_permission, parent, false)
+        val binding: ItemAppPermissionBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_app_permission,
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
 
@@ -36,7 +41,8 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
     }
 
     // add view when data change
-    fun addDataList(appPermissions: ArrayList<AppPermission>){
+    fun addDataList(appPermissions: ArrayList<AppPermission>) {
+        this.dataList.clear()
         this.dataList.addAll(appPermissions)
         notifyDataSetChanged()
     }
@@ -47,10 +53,11 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
     }
 
     // Class binding data
-    class ViewHolder(private val binding: ItemAppPermissionBinding): RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemAppPermissionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val viewModel = ItemAppPermissionViewModel()
 
-        fun bind(permission: AppPermission){
+        fun bind(permission: AppPermission) {
             viewModel.binding(permission)
             binding.viewModel = viewModel
         }

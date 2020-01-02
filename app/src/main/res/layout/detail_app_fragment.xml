@@ -79,6 +79,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/view_detail"
+                    android:paddingBottom="@dimen/padding_last_item"
                     app:adapterRecyclerView="@{viewModel.adapterDefault}"
                     android:layout_height="match_parent" />
 

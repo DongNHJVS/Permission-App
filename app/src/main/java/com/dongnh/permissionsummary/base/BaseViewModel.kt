@@ -22,4 +22,12 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.clear()
         super.onCleared()
     }
+
+    fun startWorking() {
+        interfaceLoad!!.onLoading()
+    }
+
+    fun stopWorking() {
+        interfaceLoad!!.onComplete()
+    }
 }

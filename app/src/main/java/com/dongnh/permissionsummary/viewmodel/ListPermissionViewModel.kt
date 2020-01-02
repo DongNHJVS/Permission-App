@@ -7,11 +7,17 @@ import android.content.res.Resources.NotFoundException
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.dongnh.permissionsummary.R
 import com.dongnh.permissionsummary.adapter.AdapterAppPermission
 import com.dongnh.permissionsummary.base.BaseViewModel
 import com.dongnh.permissionsummary.const.ANDROID
+import com.dongnh.permissionsummary.const.INTERNET
 import com.dongnh.permissionsummary.model.AppPermission
 import com.dongnh.permissionsummary.model.PermissionItem
+import com.dongnh.permissionsummary.ultil.exts.capitalizeWords
+import com.dongnh.permissionsummary.ultil.exts.lowCase
+import com.dongnh.permissionsummary.ultil.exts.lowCaseViewName
+import com.dongnh.permissionsummary.ultil.exts.toNamePermission
 import timber.log.Timber
 
 
@@ -33,10 +39,11 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
      * Get all app of phone
      */
     fun getAllApp() {
+        startWorking()
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pkgAppsList: List<*> =
-            context.packageManager.queryIntentActivities(mainIntent, 0)
+            context.packageManager.queryIntentActivities(mainIntent, PackageManager.GET_RESOLVED_FILTER)
 
         val arrayListApp = arrayListOf<AppPermission>()
 
@@ -88,21 +95,40 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                     listPermission.add(permissionItem)
                 }
 
+                // Add flag
                 for (i in permissionGrants.indices) {
                     listPermission.get(i).granted = permissionGrants.get(i)
                 }
+
+                // Remove not know permission
+                for (i in 0 until listPermission.size) {
+                    if (listPermission.get(i).permissionName.equals(INTERNET)) {
+                        listPermission.get(i).drawableIcon = context.getDrawable(R.drawable.internet)
+                    }
+
+                    if (listPermission.get(i).drawableIcon != null) {
+                        listPermission.get(i).permissionName =
+                            listPermission.get(i).permissionName?.toNamePermission()?.lowCase()?.capitalizeWords()?.lowCaseViewName()
+                    }
+                }
+
+                listPermission.removeAll() { it.drawableIcon == null }
             }
 
-            val appPermission = AppPermission(name = applicationName.toString(),
-                drawable = icon,
-                packagesName = packageInfo.packageName,
-                permissions = listPermission,
-                versionName = packageInfo.versionName)
+            if (listPermission.size > 0) {
+                // new item for view
+                val appPermission = AppPermission(name = applicationName.toString(),
+                    drawable = icon,
+                    packagesName = packageInfo.packageName,
+                    permissions = listPermission,
+                    versionName = packageInfo.versionName)
 
-            arrayListApp.add(appPermission)
+                arrayListApp.add(appPermission)
+            }
         }
 
         disableSwipe.value = true
         adapterApp.addDataList(arrayListApp)
+        stopWorking()
     }
 }
