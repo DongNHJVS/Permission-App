@@ -41,6 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@color/white"
+                        android:weightSum="1"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -54,8 +55,9 @@
                             app:mutableImage="@{viewModel.appPermission.drawable}" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -71,6 +73,12 @@
                                 android:text='@{ @string/app_item_version + " " + viewModel.appPermission.versionName}' />
 
                         </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/next_to_setting"
+                            android:layout_width="@dimen/height_imageview_detail"
+                            android:src="@drawable/next"
+                            android:layout_height="@dimen/height_imageview_detail"/>
 
                     </LinearLayout>
 

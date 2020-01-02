@@ -36,6 +36,12 @@ class ListPermissionFragment : BaseFragment<ListPermissionFragmentBinding, ListP
                 _dataBinding.listSwipe.isRefreshing = false
             }
         })
+
+        SingletonArgument.reloadData.observe(this@ListPermissionFragment, Observer {
+            if (it != null && it) {
+                _viewModel.getAllApp()
+            }
+        })
     }
 
     private fun setUpEventForSwipe() {

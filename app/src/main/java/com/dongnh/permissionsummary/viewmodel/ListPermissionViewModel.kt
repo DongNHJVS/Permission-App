@@ -91,7 +91,7 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                         Timber.e(e)
                     }
 
-                    val permissionItem = PermissionItem(permissionName = stringPermission, drawableIcon = drawable)
+                    val permissionItem = PermissionItem(permissionName = stringPermission, drawableIcon = drawable, packageName = stringPermission)
                     listPermission.add(permissionItem)
                 }
 
