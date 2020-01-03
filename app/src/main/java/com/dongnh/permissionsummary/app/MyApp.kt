@@ -2,7 +2,9 @@ package com.dongnh.permissionsummary.app
 
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.dongnh.permissionsummary.di.viewModelModule
+import com.dongnh.permissionsummary.di.apiModule
+import com.dongnh.permissionsummary.di.databaseModule
+import com.dongnh.permissionsummary.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -26,7 +28,9 @@ class MyApp : MultiDexApplication() {
             androidContext(this@MyApp)
             modules(
                 listOf(
-                    viewModelModule
+                    apiModule,
+                    networkModule,
+                    databaseModule
                 )
             )
         }

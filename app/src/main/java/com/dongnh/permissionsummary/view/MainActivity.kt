@@ -34,5 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             ListPermissionFragment(),
             ListPermissionFragment::class.java.simpleName, true, R.id.main_layout, 0, 0, 0, 0
         )
+
+        // Start upload tracking
+        _viewModel.startWorkerInBackground()
     }
 }
