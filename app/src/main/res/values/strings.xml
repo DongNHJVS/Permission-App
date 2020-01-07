@@ -19,4 +19,8 @@
     <string name="app_detail_not_granted">Not Granted</string>
     <string name="app_detail_when_use">Allow when using app</string>
     <string name="app_detail_not_know">Unknowns</string>
+
+    <!-- Dialog -->
+    <string name="app_dialog_btn_ok">OK</string>
+    <string name="app_dialog_btn_cancel">Cancel</string>
 </resources>

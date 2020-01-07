@@ -17,6 +17,9 @@
         android:orientation="vertical"
         tools:context=".view.DetailAppFragment">
 
+        <include layout="@layout/action_bar"
+            android:id="@+id/tool_bar"/>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

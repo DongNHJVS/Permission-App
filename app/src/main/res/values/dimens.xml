@@ -4,6 +4,7 @@
     <!-- margin -->
     <dimen name="margin_common">5dp</dimen>
     <dimen name="margin_material">16dp</dimen>
+    <dimen name="margin_top_item_null">50dp</dimen>
 
     <!-- padding -->
     <dimen name="padding_left_text">5dp</dimen>
@@ -24,9 +25,12 @@
     <dimen name="max_elevation_cardview">6dp</dimen>
     <dimen name="stroke_width_cardview">0.5dp</dimen>
 
+    <!-- height -->
     <dimen name="height_imageview_account">60dp</dimen>
     <dimen name="height_imageview_detail">40dp</dimen>
     <dimen name="height_imageview_goto">30dp</dimen>
+    <dimen name="height_image">35dp</dimen>
+
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
     <!-- background -->

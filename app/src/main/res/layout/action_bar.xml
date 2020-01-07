@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_app_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:theme="@style/ActionBarTheme">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_common"
+                android:layout_marginEnd="@dimen/margin_common"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="@string/app_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:textColor="@color/black" />
+
+                <FrameLayout
+                    android:layout_width="@dimen/height_image"
+                    android:id="@+id/filter_btn"
+                    android:layout_height="@dimen/height_image">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_filter"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/show_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|top"
+                        android:background="@color/transparent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_dot"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </RelativeLayout>
+
+</layout>

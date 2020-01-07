@@ -4,15 +4,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongnh.permissionsummary.R
 import com.dongnh.permissionsummary.base.BaseFragment
-import com.dongnh.permissionsummary.databinding.DetailAppFragmentBinding
+import com.dongnh.permissionsummary.databinding.FragmentDetailPermissionBinding
 import com.dongnh.permissionsummary.singleton.SingletonArgument
 import com.dongnh.permissionsummary.viewmodel.DetailAppViewModel
 
-class DetailAppFragment : BaseFragment<DetailAppFragmentBinding, DetailAppViewModel>(R.layout.detail_app_fragment) {
+class DetailAppFragment : BaseFragment<FragmentDetailPermissionBinding, DetailAppViewModel>(R.layout.fragment_detail_permission) {
 
     companion object {
         val REQUEST_CODE = 1001
@@ -29,6 +30,9 @@ class DetailAppFragment : BaseFragment<DetailAppFragmentBinding, DetailAppViewMo
         _dataBinding.nextToSetting.setOnClickListener {
             this@DetailAppFragment.openAppSystemSettings()
         }
+
+        // Hide filter
+        _dataBinding.toolBar.filterBtn.visibility = View.GONE
     }
 
     fun openAppSystemSettings() {
@@ -42,8 +46,8 @@ class DetailAppFragment : BaseFragment<DetailAppFragmentBinding, DetailAppViewMo
         super.onActivityResult(requestCode, resultCode, data)
         if (REQUEST_CODE == requestCode) {
             // Back to main
-            activity?.onBackPressed()
-            SingletonArgument.reloadData.value = true
+            _viewModel.reloadInformationApp()
+            _viewModel.appPermission.value?.permissions?.let { _viewModel.adapterDefault.setNewDatalist(it) }
         }
     }
 

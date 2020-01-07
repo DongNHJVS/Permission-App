@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dongnh.permissionsummary.R
-import com.dongnh.permissionsummary.databinding.ItemAppPermissionBinding
+import com.dongnh.permissionsummary.databinding.ItemListPermissionBinding
 import com.dongnh.permissionsummary.model.AppPermission
 import com.dongnh.permissionsummary.ultil.interfaces.OnItemClickListener
 import com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel
@@ -16,9 +16,9 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
 
     // Create view of Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemAppPermissionBinding = DataBindingUtil.inflate(
+        val binding: ItemListPermissionBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_app_permission,
+            R.layout.item_list_permission,
             parent,
             false
         )
@@ -53,7 +53,7 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
     }
 
     // Class binding data
-    class ViewHolder(private val binding: ItemAppPermissionBinding) :
+    class ViewHolder(private val binding: ItemListPermissionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val viewModel = ItemAppPermissionViewModel()
 

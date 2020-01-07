@@ -9,20 +9,18 @@ const val ALLOW = 2
 // Name of provider
 const val ANDROID = "android"
 
+// Internet
 const val INTERNET = "INTERNET"
-const val ACCESS_WIFI_STATE = "ACCESS_WIFI_STATE"
-const val ACCESS_NETWORK_STATE = "ACCESS_NETWORK_STATE"
-const val ACCESS_COARSE_LOCATION = "ACCESS_COARSE_LOCATION"
-const val ACCESS_FINE_LOCATION = "ACCESS_FINE_LOCATION"
-const val CAMERA = "CAMERA"
-const val RECORD_AUDIO = "RECORD_AUDIO"
 
-const val READ_EXTERNAL_STORAGE = "READ_EXTERNAL_STORAGE"
-const val WRITE_EXTERNAL_STORAGE = "WRITE_EXTERNAL_STORAGE"
-
-// Contact
-const val GET_ACCOUNT = "GET_ACCOUNT"
-const val READ_CONTACTS = "READ_CONTACTS"
-
-const val CALL_PHONE = "CALL_PHONE"
-const val READ_PHONE_STATE = "READ_PHONE_STATE"
+// List filter
+const val ALL = "All"
+const val SMS = "Sms"
+const val PHONE = "Phone"
+const val EXTERNAL = "External"
+const val CAMERA = "Camera"
+const val LOCATION = "Location"
+const val RECORD_AUDIO = "Audio"
+const val CALENDAR = "Calendar"
+const val INTERNET_FILTER = "Internet"
+const val VOICEMAIL = "Email"
+const val SENSORS = "Sensors"

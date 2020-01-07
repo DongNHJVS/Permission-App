@@ -6,13 +6,15 @@
 
         <variable
             name="viewModel"
-            type="com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel" />
+            type="com.dongnh.permissionsummary.viewmodel.ItemPermissionViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_common"
+        android:layout_marginTop="@dimen/margin_common"
+        android:layout_marginStart="@dimen/margin_common"
+        android:layout_marginEnd="@dimen/margin_common"
         app:cardCornerRadius="@dimen/corner_card_zero"
         app:cardElevation="@dimen/elevation_cardview"
         app:cardMaxElevation="@dimen/max_elevation_cardview"
@@ -21,6 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
@@ -32,11 +35,11 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView"
-                    android:layout_width="@dimen/height_imageview_account"
-                    android:layout_height="@dimen/height_imageview_account"
+                    android:layout_width="@dimen/height_imageview_detail"
+                    android:layout_height="@dimen/height_imageview_detail"
                     android:layout_margin="@dimen/margin_common"
                     android:contentDescription="@string/app_name"
-                    app:mutableImage="@{viewModel.appPerMission.drawable}"
+                    app:mutableImage="@{viewModel.icon}"
                     android:paddingTop="@dimen/nav_header_vertical_spacing" />
 
                 <LinearLayout
@@ -48,17 +51,20 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_name + " " + viewModel.appPerMission.name}'
+                        android:text='@{ viewModel.namePermission}'
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_version + " " + viewModel.appPerMission.versionName}'
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_permission_count + " " + viewModel.appPerMission.permissions.size()}'
+                        android:layout_width="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="@dimen/margin_common"
+                        android:paddingEnd="@dimen/margin_common"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="@dimen/margin_common"
+                        app:mutableTextIntColor='@{ viewModel.color }'
+                        app:mutableBackgound='@{ viewModel.backgroundItem }'
+                        app:mutableTextString='@{ viewModel.granted }'
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>

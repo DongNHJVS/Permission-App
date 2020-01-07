@@ -3,6 +3,7 @@ package com.dongnh.permissionsummary.viewmodel
 import android.content.Context
 import android.content.Intent
 import android.content.pm.*
+import android.content.pm.PackageManager.NameNotFoundException
 import android.content.res.Resources.NotFoundException
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -26,6 +27,8 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
     val adapterApp: AdapterAppPermission = AdapterAppPermission()
     val viewList: MutableLiveData<Int> = MutableLiveData()
     val viewNull: MutableLiveData<Int> = MutableLiveData()
+
+    val listPermissionFilter = arrayListOf<String>()
 
     val disableSwipe: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -55,20 +58,9 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                     resolveInfo.activityInfo.packageName,
                     PackageManager.GET_PERMISSIONS
                 )
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (e: NameNotFoundException) {
                 e.printStackTrace()
             }
-
-            var ai: ApplicationInfo?
-            ai = try {
-                context.packageManager.getApplicationInfo(packageInfo?.packageName, 0)
-            } catch (e: PackageManager.NameNotFoundException) {
-                null
-            }
-            val icon: Drawable =
-                context.packageManager.getApplicationIcon(packageInfo?.packageName)
-            val applicationName =
-                (if (ai != null) context.packageManager.getApplicationLabel(ai) else "(unknown)")
 
             val requestedPermissions = packageInfo!!.requestedPermissions
             val permissionGrants =  packageInfo.requestedPermissionsFlags
@@ -85,7 +77,7 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                             context.packageManager.getPermissionGroupInfo(permissionInfo.group, 0)
                         drawable = context.packageManager.getResourcesForApplication(ANDROID)
                             .getDrawable(groupInfo.icon)
-                    } catch (e: PackageManager.NameNotFoundException) {
+                    } catch (e: NameNotFoundException) {
                         Timber.e(e)
                     } catch (e: NotFoundException) {
                         Timber.e(e)
@@ -102,13 +94,13 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
 
                 // Remove not know permission
                 for (i in 0 until listPermission.size) {
-                    if (listPermission.get(i).permissionName.equals(INTERNET)) {
-                        listPermission.get(i).drawableIcon = context.getDrawable(R.drawable.internet)
+                    if (listPermission[i].permissionName.equals(INTERNET)) {
+                        listPermission[i].drawableIcon = context.getDrawable(R.drawable.internet)
                     }
 
-                    if (listPermission.get(i).drawableIcon != null) {
-                        listPermission.get(i).permissionName =
-                            listPermission.get(i).permissionName?.toNamePermission()?.lowCase()?.capitalizeWords()?.lowCaseViewName()
+                    if (listPermission[i].drawableIcon != null) {
+                        listPermission[i].permissionName =
+                            listPermission[i].permissionName?.toNamePermission()?.lowCase()?.capitalizeWords()?.lowCaseViewName()
                     }
                 }
 
@@ -116,6 +108,18 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
             }
 
             if (listPermission.size > 0) {
+                // Get name and icon
+                val ai: ApplicationInfo? = try {
+                    context.packageManager.getApplicationInfo(packageInfo.packageName, 0)
+                } catch (e: NameNotFoundException) {
+                    null
+                }
+
+                val icon: Drawable =
+                    context.packageManager.getApplicationIcon(packageInfo.packageName)
+                val applicationName =
+                    (if (ai != null) context.packageManager.getApplicationLabel(ai) else "(unknown)")
+
                 // new item for view
                 val appPermission = AppPermission(name = applicationName.toString(),
                     drawable = icon,
@@ -123,10 +127,29 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                     permissions = listPermission,
                     versionName = packageInfo.versionName)
 
-                arrayListApp.add(appPermission)
+                // With filter
+                if (listPermissionFilter.size > 0) {
+                    for (permission: PermissionItem in listPermission) {
+                        for (key: String in listPermissionFilter) {
+                            if (permission.permissionName?.contains(key)!!) {
+                                arrayListApp.add(appPermission)
+                                break
+                            }
+                        }
+                    }
+                } else {
+                    arrayListApp.add(appPermission)
+                }
             }
         }
 
+        if (arrayListApp.isEmpty()) {
+            viewList.value = View.GONE
+            viewNull.value = View.VISIBLE
+        } else {
+            viewList.value = View.VISIBLE
+            viewNull.value = View.GONE
+        }
         disableSwipe.value = true
         adapterApp.addDataList(arrayListApp)
         stopWorking()
