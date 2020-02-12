@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongnh.permissionsummary.R
@@ -33,6 +34,10 @@ class DetailAppFragment : BaseFragment<FragmentDetailPermissionBinding, DetailAp
 
         // Hide filter
         _dataBinding.toolBar.filterBtn.visibility = View.GONE
+
+        _viewModel.appPermission.observe(this@DetailAppFragment, Observer { appPermission ->
+            appPermission.permissions?.let { _viewModel.adapterDefault.setNewDatalist(it) }
+        })
     }
 
     fun openAppSystemSettings() {
@@ -47,7 +52,6 @@ class DetailAppFragment : BaseFragment<FragmentDetailPermissionBinding, DetailAp
         if (REQUEST_CODE == requestCode) {
             // Back to main
             _viewModel.reloadInformationApp()
-            _viewModel.appPermission.value?.permissions?.let { _viewModel.adapterDefault.setNewDatalist(it) }
         }
     }
 

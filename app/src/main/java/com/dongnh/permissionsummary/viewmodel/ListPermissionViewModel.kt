@@ -1,5 +1,6 @@
 package com.dongnh.permissionsummary.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.*
@@ -19,6 +20,9 @@ import com.dongnh.permissionsummary.ultil.exts.capitalizeWords
 import com.dongnh.permissionsummary.ultil.exts.lowCase
 import com.dongnh.permissionsummary.ultil.exts.lowCaseViewName
 import com.dongnh.permissionsummary.ultil.exts.toNamePermission
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 
@@ -41,8 +45,40 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
     /**
      * Get all app of phone
      */
+    @SuppressLint("CheckResult")
     fun getAllApp() {
         startWorking()
+        Observable.fromCallable { findAllPermission() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    if (it.isEmpty()) {
+                        viewList.value = View.GONE
+                        viewNull.value = View.VISIBLE
+                    } else {
+                        viewList.value = View.VISIBLE
+                        viewNull.value = View.GONE
+                    }
+                    disableSwipe.value = true
+                    adapterApp.addDataList(it)
+                    stopWorking()
+                    Timber.e("RxJava Load ok")
+                },
+                {
+                    stopWorking()
+                    Timber.e("RxJava Load Fail")
+                    Timber.e(it)
+                    it.printStackTrace()
+                }
+            )
+
+    }
+
+    /**
+     * Get all permission request
+     */
+    private fun findAllPermission() : ArrayList<AppPermission> {
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pkgAppsList: List<*> =
@@ -78,7 +114,7 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                         drawable = context.packageManager.getResourcesForApplication(ANDROID)
                             .getDrawable(groupInfo.icon)
                     } catch (e: NameNotFoundException) {
-                        Timber.e(e)
+                        Timber.e("NameNotFoundException %s", stringPermission)
                     } catch (e: NotFoundException) {
                         Timber.e(e)
                     }
@@ -89,7 +125,7 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
 
                 // Add flag
                 for (i in permissionGrants.indices) {
-                    listPermission.get(i).granted = permissionGrants.get(i)
+                    listPermission[i].granted = permissionGrants.get(i)
                 }
 
                 // Remove not know permission
@@ -143,15 +179,6 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
             }
         }
 
-        if (arrayListApp.isEmpty()) {
-            viewList.value = View.GONE
-            viewNull.value = View.VISIBLE
-        } else {
-            viewList.value = View.VISIBLE
-            viewNull.value = View.GONE
-        }
-        disableSwipe.value = true
-        adapterApp.addDataList(arrayListApp)
-        stopWorking()
+        return arrayListApp
     }
 }

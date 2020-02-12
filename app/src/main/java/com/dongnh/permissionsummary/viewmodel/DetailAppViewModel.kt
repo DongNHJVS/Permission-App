@@ -1,5 +1,6 @@
 package com.dongnh.permissionsummary.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.*
@@ -18,6 +19,9 @@ import com.dongnh.permissionsummary.ultil.exts.capitalizeWords
 import com.dongnh.permissionsummary.ultil.exts.lowCase
 import com.dongnh.permissionsummary.ultil.exts.lowCaseViewName
 import com.dongnh.permissionsummary.ultil.exts.toNamePermission
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -28,9 +32,31 @@ class DetailAppViewModel(val context: Context) : BaseViewModel() {
     /**
      * Reload information app permission
      */
+    @SuppressLint("CheckResult")
     fun reloadInformationApp() {
         appPermission.value = AppPermission()
         startWorking()
+        Observable.fromCallable { loadPermissionOfApp() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    appPermission.value = it
+                    stopWorking()
+                    Timber.e("RxJava Load ok")
+                },
+                {
+                    stopWorking()
+                    Timber.e("RxJava Load Fail")
+                    Timber.e(it)
+                    it.printStackTrace()
+                }
+            )
+
+    }
+
+    private fun loadPermissionOfApp() : AppPermission {
+        var appPermission = AppPermission()
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pkgAppsList: List<*> =
@@ -48,7 +74,7 @@ class DetailAppViewModel(val context: Context) : BaseViewModel() {
                     PackageManager.GET_PERMISSIONS
                 )
             } catch (e: PackageManager.NameNotFoundException) {
-                e.printStackTrace()
+                Timber.e("NameNotFoundException %s", resolveInfo.activityInfo.packageName)
             }
 
             if (packageInfo?.packageName == SingletonArgument.appPermission.packagesName) {
@@ -116,20 +142,19 @@ class DetailAppViewModel(val context: Context) : BaseViewModel() {
                     val applicationName =
                         (if (ai != null) context.packageManager.getApplicationLabel(ai) else "(unknown)")
                     // new item for view
-                    val appPermission = AppPermission(
+                    appPermission = AppPermission(
                         name = applicationName.toString(),
                         drawable = icon,
                         packagesName = packageInfo.packageName,
                         permissions = listPermission,
                         versionName = packageInfo.versionName
                     )
-
-                    this@DetailAppViewModel.appPermission.value = appPermission
                 }
+
+                break
             }
 
         }
-
-        stopWorking()
+        return appPermission
     }
 }
