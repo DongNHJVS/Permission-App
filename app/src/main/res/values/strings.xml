@@ -10,8 +10,11 @@
 
     <!-- Item -->
     <string name="app_item_name">App name :</string>
-    <string name="app_item_version">App version :</string>
-    <string name="app_item_permission_count">App permission count :</string>
+    <string name="app_item_version">Version :</string>
+    <string name="app_item_permission_count">Permission count :</string>
+    <string name="app_item_system">System :</string>
+    <string name="app_item_system_yes">Yes</string>
+    <string name="app_item_system_no">No</string>
 
     <!-- Detail -->
     <string name="app_detail_name">Detail</string>

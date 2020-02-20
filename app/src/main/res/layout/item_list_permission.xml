@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="androidx.core.content.ContextCompat" />
+
         <variable
             name="viewModel"
             type="com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel" />
@@ -43,25 +45,73 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
+                    android:weightSum="1"
                     android:gravity="center"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_name + " " + viewModel.appPerMission.name}'
-                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_version + " " + viewModel.appPerMission.versionName}'
-                        android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text='@{ viewModel.appPerMission.name}'
+                            android:layout_height="wrap_content"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text='@{ @string/app_item_permission_count + " " + viewModel.appPerMission.permissions.size()}'
-                        android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text='@{ @string/app_item_version + " " + viewModel.appPerMission.versionName}'
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text='@{ @string/app_item_permission_count + " " + viewModel.appPerMission.permissions.size()}'
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            app:mutableStringColor='@{ viewModel.isSystemString}'
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_common"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/btn_hide_show"
+                            android:layout_marginEnd="@dimen/margin_common"
+                            android:layout_marginStart="@dimen/margin_common"
+                            android:layout_width="@dimen/height_imageview_goto"
+                            android:src="@{ContextCompat.getDrawable(context, viewModel.iconShow)}"
+                            android:tag="@{viewModel.iconShow}"
+                            android:layout_height="@dimen/height_imageview_goto"/>
+
+                        <ImageView
+                            android:id="@+id/btn_lock_unlock"
+                            android:layout_marginEnd="@dimen/margin_common"
+                            android:src="@{ContextCompat.getDrawable(context, viewModel.iconLock)}"
+                            android:tag="@{viewModel.iconShow}"
+                            android:layout_width="@dimen/height_imageview_goto"
+                            android:layout_height="@dimen/height_imageview_goto"/>
+
+                        <ImageView
+                            android:id="@+id/btn_setting"
+                            android:src="@drawable/ic_setting"
+                            android:layout_marginEnd="@dimen/margin_common"
+                            android:layout_width="@dimen/height_imageview_goto"
+                            android:layout_height="@dimen/height_imageview_goto"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

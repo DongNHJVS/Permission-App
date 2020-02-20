@@ -5,5 +5,7 @@ import com.dongnh.permissionsummary.model.AppPermission
 
 // interface Click on item
 interface OnItemClickListener {
-    fun onClick(view: View, entity: AppPermission)
+    fun onClickSetting(view: View, entity: AppPermission)
+    fun onClickHide(view: View, entity: AppPermission)
+    fun onClickLock(view: View, entity: AppPermission)
 }

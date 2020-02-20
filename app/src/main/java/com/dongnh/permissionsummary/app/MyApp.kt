@@ -2,6 +2,7 @@ package com.dongnh.permissionsummary.app
 
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.dongnh.permissionsummary.di.databaseModule
 import com.dongnh.permissionsummary.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -26,7 +27,8 @@ class MyApp : MultiDexApplication() {
             androidContext(this@MyApp)
             modules(
                 listOf(
-                    viewModelModule
+                    viewModelModule,
+                    databaseModule
                 )
             )
         }

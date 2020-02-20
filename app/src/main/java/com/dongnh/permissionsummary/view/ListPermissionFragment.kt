@@ -29,7 +29,7 @@ class ListPermissionFragment : BaseFragment<FragmentListPermissionBinding, ListP
         super.onActivityCreated(savedInstanceState)
 
         _dataBinding.viewModel = _viewModel
-        _viewModel.adapterApp.listener = this@ListPermissionFragment
+        _viewModel.adapterApp.listenerClick = this@ListPermissionFragment
         _dataBinding.viewListApp.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         setUpEventForSwipe()
@@ -74,7 +74,7 @@ class ListPermissionFragment : BaseFragment<FragmentListPermissionBinding, ListP
     /**
      * Event lick on item
      */
-    override fun onClick(view: View, entity: AppPermission) {
+    override fun onClickSetting(view: View, entity: AppPermission) {
         Timber.e(entity.toString())
         SingletonArgument.appPermission = entity
         activity?.let {
@@ -86,6 +86,14 @@ class ListPermissionFragment : BaseFragment<FragmentListPermissionBinding, ListP
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onClickHide(view: View, entity: AppPermission) {
+
+    }
+
+    override fun onClickLock(view: View, entity: AppPermission) {
+
     }
 
     private fun setUpDialogFilter() {

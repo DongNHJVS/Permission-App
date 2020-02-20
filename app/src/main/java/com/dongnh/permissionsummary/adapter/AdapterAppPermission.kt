@@ -11,7 +11,7 @@ import com.dongnh.permissionsummary.ultil.interfaces.OnItemClickListener
 import com.dongnh.permissionsummary.viewmodel.ItemAppPermissionViewModel
 
 class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolder>() {
-    lateinit var listener: OnItemClickListener
+    lateinit var listenerClick: OnItemClickListener
     private var dataList: ArrayList<AppPermission> = arrayListOf()
 
     // Create view of Adapter
@@ -27,12 +27,7 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
 
     // Bind data
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataList[position])
-        holder.itemView.setOnClickListener { view ->
-            listener.let {
-                listener.onClick(view, dataList[position])
-            }
-        }
+        holder.bind(dataList[position], listenerClick)
     }
 
     // Get item count
@@ -49,7 +44,7 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
 
     // Set listener
     fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
+        this.listenerClick = listener
     }
 
     // Class binding data
@@ -57,9 +52,21 @@ class AdapterAppPermission : RecyclerView.Adapter<AdapterAppPermission.ViewHolde
         RecyclerView.ViewHolder(binding.root) {
         private val viewModel = ItemAppPermissionViewModel()
 
-        fun bind(permission: AppPermission) {
+        fun bind(permission: AppPermission, listener: OnItemClickListener) {
             viewModel.binding(permission)
             binding.viewModel = viewModel
+
+            binding.btnSetting.setOnClickListener {
+                listener.onClickSetting(it, permission)
+            }
+
+            binding.btnHideShow.setOnClickListener {
+                listener.onClickHide(it, permission)
+            }
+
+            binding.btnLockUnlock.setOnClickListener {
+                listener.onClickLock(it, permission)
+            }
         }
     }
 }

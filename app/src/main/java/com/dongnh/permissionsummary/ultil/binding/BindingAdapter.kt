@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -86,6 +87,18 @@ fun mutableTextString(view: TextView, text: MutableLiveData<Int>?) {
                 } catch (e: Exception) {
                     Timber.e(e)
                 }
+            }
+        })
+    }
+}
+
+@BindingAdapter("mutableStringColor")
+fun setMutableStringColor(view: TextView, idString: MutableLiveData<String>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && idString != null) {
+        idString.observe(parentActivity, Observer { value ->
+            if (value != null) {
+                view.text = HtmlCompat.fromHtml(value, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
         })
     }

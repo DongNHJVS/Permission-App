@@ -156,12 +156,21 @@ class ListPermissionViewModel(var context: Context) : BaseViewModel() {
                 val applicationName =
                     (if (ai != null) context.packageManager.getApplicationLabel(ai) else "(unknown)")
 
+                var isSystem = false
+
+                if (ai != null) {
+                    if (!ai.sourceDir.startsWith("/data/app/")) {
+                        isSystem = true
+                    }
+                }
+
                 // new item for view
                 val appPermission = AppPermission(name = applicationName.toString(),
                     drawable = icon,
                     packagesName = packageInfo.packageName,
                     permissions = listPermission,
-                    versionName = packageInfo.versionName)
+                    versionName = packageInfo.versionName,
+                    isSystem = isSystem)
 
                 // With filter
                 if (listPermissionFilter.size > 0) {

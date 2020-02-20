@@ -10,6 +10,7 @@
     <dimen name="padding_left_text">5dp</dimen>
     <dimen name="padding_right_text">5dp</dimen>
     <dimen name="padding_last_item">5dp</dimen>
+    <dimen name="padding_common">5dp</dimen>
 
     <!-- weight -->
     <dimen name="width_min_dialog_btn">100dp</dimen>
@@ -26,7 +27,7 @@
     <dimen name="stroke_width_cardview">0.5dp</dimen>
 
     <!-- height -->
-    <dimen name="height_imageview_account">60dp</dimen>
+    <dimen name="height_imageview_account">70dp</dimen>
     <dimen name="height_imageview_detail">40dp</dimen>
     <dimen name="height_imageview_goto">30dp</dimen>
     <dimen name="height_image">35dp</dimen>
